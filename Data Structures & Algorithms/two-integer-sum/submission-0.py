@@ -4,5 +4,5 @@ class Solution:
         for i in range(len(nums)):
             x = target - nums[i]
             if x in dict1:
-                return [dict1[x],i]
+                return [dict1[x], i]
             dict1[nums[i]] = i
