@@ -1,38 +1,38 @@
 class Solution:
     def solve(self, board: List[List[str]]) -> None:
         ROW, COL = len(board), len(board[0])
-        visited = set()
+        a = set()
 
         def dfs(r,c):
-            if r < 0 or c < 0 or r >= ROW or c >= COL or board[r][c] == "X" or (r,c) in visited:
+            if r < 0 or c < 0 or r >= ROW or c >= COL or board[r][c] == "X" or (r,c) in a:
                 return
-            
-            visited.add((r,c))
+
+            a.add((r,c))
 
             dfs(r+1,c)
             dfs(r-1,c)
-            dfs(r,c+1)
             dfs(r,c-1)
+            dfs(r,c+1)
 
-
-
+        for r in range(ROW):
+            if board[r][0] == "O":
+                dfs(r,0)
+            if board[r][COL-1] == "O":
+                dfs(r, COL-1)
+                
+        
         for c in range(COL):
             if board[0][c] == "O":
-                dfs(0, c)
+                dfs(0,c)
+                
             if board[ROW-1][c] == "O":
                 dfs(ROW-1, c)
         
-        for r in range(ROW):
-            if board[r][0] == "O":
-                dfs(r, 0)
-            if board[r][COL-1] == "O":
-                dfs(r, COL-1)
-        
-
 
         for r in range(ROW):
             for c in range(COL):
-                if (r,c) not in visited:
-                    board[r][c] = "X"
-
+                if (r,c) in a or board[r][c] == "X":
+                    continue
+                board[r][c] = "X"
         
+
