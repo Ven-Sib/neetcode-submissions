@@ -1,12 +1,22 @@
-import heapq
-
 class Solution:
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
-        dict1 = {}
+        res = []
+        frq = [[] for i in range(len(nums)+1)]
+        dict1 = defaultdict(int)
+
         for i in nums:
-            if i in dict1:
-                dict1[i] += 1
-            else:
-                dict1[i] = 1
-        top_k_keys = heapq.nlargest(k, dict1, key=dict1.get)
-        return top_k_keys
+            dict1[i] += 1
+        
+        for key, value in dict1.items():
+            frq[value].append(key)
+        
+        for i in range(len(frq)-1,-1,-1):
+            
+            for j in frq[i]:
+                res.append(j)
+                if len(res) == k:
+                    return res
+        return -1
+
+        
+            
